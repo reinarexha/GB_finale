@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . BASE_URL . '/admin/games.php');
     exit;
 }
-
+//test
 $id = (int)($_POST['id'] ?? 0);
 if ($id <= 0) {
     header('Location: ' . BASE_URL . '/admin/games.php?error=' . urlencode('Invalid game ID'));
