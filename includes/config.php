@@ -1,7 +1,12 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
+// includes/config.php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../app/core/Auth.php';
+
+$auth = new Auth();
+$auth->start();
 
 /**
  * Paths

@@ -1,9 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
+require_once __DIR__ . '/../app/core/Auth.php';
 
-if (!isset($_SESSION['user_id'])) {
-  header("Location: /auth/login.php?error=login_required");
-  exit;
-}
+$auth = new Auth();
+$auth->requireLogin();
+

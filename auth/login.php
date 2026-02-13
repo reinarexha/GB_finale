@@ -1,13 +1,17 @@
 <?php
 // auth/login.php
+
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../app/core/Database.php';
+require_once __DIR__ . '/../app/core/Auth.php';
 
-$pdo = Database::getConnection();
+$pdo  = Database::getConnection();
+$auth = new Auth();
+$auth->start();
 
 // If already logged in, redirect based on role
-if (isset($_SESSION['user_id'])) {
-    if (($_SESSION['role'] ?? '') === 'admin') {
+if ($auth->check()) {
+    if ($auth->isAdmin()) {
         header('Location: ' . rtrim(BASE_URL, '/') . '/admin/dashboard.php');
         exit;
     }
@@ -15,37 +19,39 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-$error = "";
-$emailValue = "";
+$error = '';
+$emailValue = '';
 
 // Handle login submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $password = (string)($_POST['password'] ?? '');
     $emailValue = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 
     if ($email === '' || $password === '') {
-        $error = "Please fill in both email and password.";
+        $error = 'Please fill in both email and password.';
     } else {
         try {
             // IMPORTANT: change column names if yours differ
-            $stmt = $pdo->prepare("SELECT id, email, password_hash, role FROM users WHERE email = ? LIMIT 1");
+            $stmt = $pdo->prepare('SELECT id, email, password_hash, role FROM users WHERE email = ? LIMIT 1');
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Generic error for both cases (prevents email enumeration)
-            if (!$user || !password_verify($password, $user['password_hash'])) {
-                $error = "Invalid email or password.";
+            if (!$user || !password_verify($password, (string)$user['password_hash'])) {
+                $error = 'Invalid email or password.';
             } else {
                 // Successful login
                 session_regenerate_id(true);
 
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['role'] = $user['role']; // 'admin' or 'user'
+                $auth->login([
+                    'id'       => $user['id'],
+                    'username' => $user['email'], // or fetch username column if you have one
+                    'role'     => $user['role'],
+                ]);
 
                 // Redirect based on role using BASE_URL
-                if ($user['role'] === 'admin') {
+                if (($user['role'] ?? '') === 'admin') {
                     header('Location: ' . rtrim(BASE_URL, '/') . '/admin/dashboard.php');
                     exit;
                 }
@@ -53,19 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: ' . rtrim(BASE_URL, '/') . '/games.php');
                 exit;
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             // Don't expose raw DB errors in production
-            $error = "Something went wrong. Please try again.";
+            $error = 'Something went wrong. Please try again.';
         }
     }
 }
 
 // Optional: show messages passed via ?error=...
 if (isset($_GET['error'])) {
-    if ($_GET['error'] === 'unauthorized') $error = "You are not allowed to access that page.";
-    if ($_GET['error'] === 'login_required') $error = "Please log in to continue.";
-    if ($_GET['error'] === 'invalid') $error = "Invalid email or password.";
-    if ($_GET['error'] === 'empty') $error = "Please fill in both email and password.";
+    if ($_GET['error'] === 'unauthorized') $error = 'You are not allowed to access that page.';
+    if ($_GET['error'] === 'login_required') $error = 'Please log in to continue.';
+    if ($_GET['error'] === 'invalid') $error = 'Invalid email or password.';
+    if ($_GET['error'] === 'empty') $error = 'Please fill in both email and password.';
 }
 ?>
 <!doctype html>
@@ -88,11 +94,11 @@ if (isset($_GET['error'])) {
   <div class="card">
     <h2>Login</h2>
 
-    <?php if ($error !== ""): ?>
+    <?php if ($error !== ''): ?>
       <div class="error"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="/auth/login.php">
+    <form method="POST" action="<?php echo rtrim(BASE_URL, '/') . '/auth/login.php'; ?>">
       <label for="email">Email</label>
       <input id="email" name="email" type="email" required value="<?php echo $emailValue; ?>">
 
@@ -103,7 +109,7 @@ if (isset($_GET['error'])) {
     </form>
 
     <div class="links">
-      <p>No account? <a href="/auth/register.php">Register</a></p>
+      <p>No account? <a href="<?php echo rtrim(BASE_URL, '/') . '/auth/register.php'; ?>">Register</a></p>
     </div>
   </div>
 </body>
