@@ -1,5 +1,5 @@
 <?php
-
+//test
 require_once __DIR__ . '/../core/Database.php';
 
 class Game
