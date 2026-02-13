@@ -366,8 +366,23 @@ textarea:focus {
 .login-card form {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   gap: 0.75rem;
+}
+
+.login-card form label,
+.signup-card form label {
+  width: 100%;
+  max-width: 315px;
+  text-align: center;
+}
+
+.login-card .form-input,
+.signup-card .form-input {
+  display: block;
+  width: 100%;
+  max-width: 315px;
+  margin: 0 auto;
 }
 
 .login-card .form-group,
@@ -380,6 +395,10 @@ textarea:focus {
 .login-card .btn-primary,
 .signup-card .btn-primary {
   margin-top: 0.5rem;
+  width: 100%;
+  max-width: 315px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .login-card .signup-text,
