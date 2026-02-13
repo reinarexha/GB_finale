@@ -79,17 +79,22 @@ include __DIR__ . '/../includes/admin_header.php';
           $attachmentType = $item['attachment_type'] ?? '';
           $isImage = ($attachmentType === 'image');
           $isPdf = ($attachmentType === 'pdf');
+          $thumbFile = basename(str_replace('\\', '/', (string)$attachmentPath));
+          $thumbUrl = $thumbFile !== ''
+            ? rtrim(BASE_URL, '/') . UPLOADS_NEWS_WEB . '/' . $thumbFile
+            : '';
 
           $searchText = trim($title . ' ' . $body);
         ?>
 
         <div class="game-card admin-news-card" data-search="<?= htmlspecialchars($searchText) ?>">
           <div class="admin-news-row">
-            <?php if (!empty($attachmentPath) && $isImage): ?>
+            <?php if ($thumbUrl !== '' && $isImage): ?>
               <img
-                src="<?= htmlspecialchars($attachmentPath) ?>"
+                src="<?= htmlspecialchars($thumbUrl) ?>"
                 alt="<?= htmlspecialchars($title) ?>"
                 class="admin-news-thumb"
+                style="max-width: 120px; height: auto;"
               >
             <?php endif; ?>
 

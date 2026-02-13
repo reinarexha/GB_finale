@@ -70,12 +70,20 @@ include __DIR__ . '/../includes/admin_header.php';
   <div class="games-grid admin-games-grid">
     
       <?php foreach ($games as $game): ?>
+        <?php
+          $imagePath = (string)($game['image_path'] ?? '');
+          $imageFile = basename(str_replace('\\', '/', $imagePath));
+          $imageUrl = $imageFile !== ''
+            ? rtrim(BASE_URL, '/') . UPLOADS_GAMES_WEB . '/' . $imageFile
+            : '';
+        ?>
         <div class="game-card admin-game-card">
-          <?php if (!empty($game['image_path'])): ?>
+          <?php if ($imageUrl !== ''): ?>
             <img
-              src="<?= htmlspecialchars($game['image_path']) ?>"
+              src="<?= htmlspecialchars($imageUrl) ?>"
               alt="<?= htmlspecialchars($game['title']) ?>"
               class="admin-game-image"
+              style="max-width: 120px; height: auto;"
             >
           <?php endif; ?>
 

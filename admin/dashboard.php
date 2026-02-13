@@ -40,7 +40,7 @@ include __DIR__ . '/../includes/admin_header.php';
   <p class="hero-sub">Overview of your Gamebits content and statistics.</p>
 </section>
 
-<section class="admin-wrap">
+<section class="admin-wrap admin-dashboard-layout">
   <div class="games-grid admin-grid">
     <div class="game-card admin-stat-card">
       <h3 class="admin-stat-number"><?= (int)$stats['total_games'] ?></h3>

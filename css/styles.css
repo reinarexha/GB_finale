@@ -862,6 +862,28 @@ body {
   padding: 0 2rem;
 }
 
+.admin-dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.admin-dashboard-layout .admin-grid {
+  margin-bottom: 0;
+}
+
+.admin-actions {
+  padding: 1rem;
+}
+
+.admin-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
 .admin-hero {
   margin-top: 2rem;
 }
@@ -971,6 +993,20 @@ body {
 .slide { display: none; }
 .slide.is-active { display: block; }
 
+.slider-image {
+  width: 100%;
+  display: block;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.slider-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0 auto 1.5rem;
+}
+
 /* Buttons */
 .slider-btn {
   position: absolute;
@@ -1027,6 +1063,17 @@ body {
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.search-wrapper .news-search {
+  width: 100%;
+  max-width: 700px;
+  justify-content: center;
 }
 
 .news-search-input {

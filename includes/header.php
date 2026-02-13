@@ -44,7 +44,7 @@ $user = $auth->user();
             <a class="nav-link <?= $currentPage === 'news' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/news.php">News</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= $currentPage === 'about' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/pages/aboutus.html">About</a>
+            <a class="nav-link <?= $currentPage === 'about' ? 'active' : ''; ?>" href="<?= rtrim(BASE_URL,'/') . '/about.php' ?>">About</a>
           </li>
           <?php if (!$isLoggedIn): ?>
   <li class="nav-item">
@@ -79,3 +79,4 @@ $user = $auth->user();
     </nav>
   </header>
 <main>
+

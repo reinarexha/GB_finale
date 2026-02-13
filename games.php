@@ -230,20 +230,22 @@ include __DIR__ . '/includes/header.php';
 <section class="featured-games">
   <div class="games-page-wrap">
 
-    <form method="GET" action="<?= e(rtrim(BASE_URL, '/')) ?>/games.php" class="news-search">
-      <input
-        type="search"
-        name="search"
-        class="news-search-input"
-        placeholder="Search games..."
-        value="<?= e($search) ?>"
-      >
-      <button type="submit" class="btn-primary news-search-btn">Search</button>
+    <div class="search-wrapper">
+      <form method="GET" action="<?= e(rtrim(BASE_URL, '/')) ?>/games.php" class="news-search">
+        <input
+          type="search"
+          name="search"
+          class="news-search-input"
+          placeholder="Search games..."
+          value="<?= e($search) ?>"
+        >
+        <button type="submit" class="btn-primary news-search-btn">Search</button>
 
-      <?php if ($search !== ''): ?>
-        <a href="<?= e(rtrim(BASE_URL, '/')) ?>/games.php" class="btn-primary news-search-btn">Clear</a>
-      <?php endif; ?>
-    </form>
+        <?php if ($search !== ''): ?>
+          <a href="<?= e(rtrim(BASE_URL, '/')) ?>/games.php" class="btn-primary news-search-btn">Clear</a>
+        <?php endif; ?>
+      </form>
+    </div>
 
     <?php if (empty($games)): ?>
       <h2 class="section-title"><?= $search !== '' ? 'No games found' : 'No games available' ?></h2>

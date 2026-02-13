@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS slider_items (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO users (username, email, password, role, created_by, updated_by)
-VALUES ('admin', 'admin@example.com', 'PLACEHOLDER_HASH_FOR_admin123', 'admin', NULL, NULL)
+VALUES ('admin', 'admin@example.com', 'admin123', 'admin', NULL, NULL)
 ON DUPLICATE KEY UPDATE username=username;
 
 -- 8) Seed page content

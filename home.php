@@ -9,6 +9,32 @@ function e(string $value): string {
   return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
+function sliderImageUrl(string $path): string {
+  $path = trim($path);
+  if ($path === '') return '';
+
+  if (preg_match('~^https?://~i', $path)) {
+    return $path;
+  }
+
+  $base = rtrim(BASE_URL, '/');
+  $normalized = '/' . ltrim(str_replace('\\', '/', $path), '/');
+
+  if ($base !== '' && str_starts_with($normalized, $base . '/')) {
+    return $normalized;
+  }
+
+  if (str_starts_with($normalized, UPLOADS_NEWS_WEB . '/')) {
+    return $base . $normalized;
+  }
+
+  if (str_starts_with($normalized, '/img/')) {
+    return $base . $normalized;
+  }
+
+  return $base . UPLOADS_NEWS_WEB . '/' . basename($normalized);
+}
+
 $content = new PageContent();
 $heroTitle = $content->getText('home', 'hero_title', 'Welcome to Gamebits');
 $heroSubtitle = $content->getText('home', 'hero_subtitle', 'Learn leadership through play.');
@@ -24,7 +50,7 @@ include __DIR__ . '/includes/header.php';
   <p class="hero-sub"><?= e($heroSubtitle) ?></p>
   <div class="hero-buttons">
     <a href="<?= e(rtrim(BASE_URL, '/')) ?>/games.php" class="btn-primary">Play Mini-Games</a>
-    <a href="<?= e(rtrim(BASE_URL, '/')) ?>/pages/aboutus.html" class="btn-primary">Learn More</a>
+    <a href="<?= rtrim(BASE_URL,'/') . '/about.php' ?>" class="btn-primary">Learn More</a>
   </div>
 </section>
 
@@ -40,13 +66,18 @@ include __DIR__ . '/includes/header.php';
     <div class="slider-dots" aria-label="Slider dots"></div>
 
     <?php foreach ($slides as $slide): ?>
+      <?php $imageUrl = sliderImageUrl((string)$slide->image_path); ?>
       <div class="slide" style="padding: 1rem;">
         <div style="display:grid;grid-template-columns:1fr;gap:12px;align-items:center;">
-          <img
-            src="<?= e($slide->image_path) ?>"
-            alt="<?= e($slide->title ?: 'Slide image') ?>"
-            style="width:100%;max-height:360px;object-fit:cover;border-radius:10px;"
-          >
+          <?php if ($imageUrl !== ''): ?>
+            <img
+              src="<?= e($imageUrl) ?>"
+              alt="<?= e($slide->title ?: 'Slide image') ?>"
+              class="slider-image"
+            >
+          <?php else: ?>
+            <div class="slider-empty">Image missing for this slide.</div>
+          <?php endif; ?>
           <div>
             <h3 style="margin:0 0 6px;"><?= e($slide->title) ?></h3>
             <?php if (!empty($slide->subtitle)): ?>
@@ -57,6 +88,11 @@ include __DIR__ . '/includes/header.php';
       </div>
     <?php endforeach; ?>
   </div>
+</section>
+<?php else: ?>
+<section class="featured-games" style="padding-top: 0;">
+  <h2 class="section-title">Featured Highlights</h2>
+  <p class="slider-empty">No slider highlights yet. Add slides from Admin.</p>
 </section>
 <?php endif; ?>
 
@@ -86,3 +122,4 @@ include __DIR__ . '/includes/header.php';
 <script src="<?= e(rtrim(BASE_URL, '/')) ?>/public/assets/js/slider.js"></script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+

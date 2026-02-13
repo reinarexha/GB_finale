@@ -72,6 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Edit News';
 $currentPage = 'news';
 include __DIR__ . '/../includes/admin_header.php';
+
+$currentAttachmentPath = (string)($news['attachment_path'] ?? '');
+$currentAttachmentFile = basename(str_replace('\\', '/', $currentAttachmentPath));
+$currentAttachmentImageUrl = $currentAttachmentFile !== ''
+  ? rtrim(BASE_URL, '/') . UPLOADS_NEWS_WEB . '/' . $currentAttachmentFile
+  : '';
 ?>
 
 <section class="hero admin-hero">
@@ -119,9 +125,10 @@ include __DIR__ . '/../includes/admin_header.php';
 
         <?php if (($news['attachment_type'] ?? '') === 'image'): ?>
           <img
-            src="<?= htmlspecialchars($news['attachment_path']) ?>"
+            src="<?= htmlspecialchars($currentAttachmentImageUrl) ?>"
             alt="Current attachment"
             class="admin-current-image"
+            style="max-width: 120px; height: auto;"
           >
         <?php else: ?>
           <a

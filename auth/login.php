@@ -32,11 +32,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare('SELECT id, username, email, password, role FROM users WHERE email = ? LIMIT 1');
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $storedPassword = (string)($user['password'] ?? '');
+            $isPlainMatch = $user && $password === $storedPassword;
+            $isValid = $user && (password_verify($password, $storedPassword) || $isPlainMatch);
 
             // Generic error for both cases (prevents email enumeration)
-            if (!$user || !password_verify($password, (string)$user['password'])) {
+            if (!$isValid) {
                 $error = 'Invalid email or password.';
             } else {
+                // If old seed password is plain text, replace it with a secure hash after first login.
+                if ($isPlainMatch) {
+                    $newHash = password_hash($password, PASSWORD_DEFAULT);
+                    $up = $pdo->prepare('UPDATE users SET password = ? WHERE id = ?');
+                    $up->execute([$newHash, (int)$user['id']]);
+                }
+
                 // Successful login
                 session_regenerate_id(true);
                 $auth->login([
@@ -74,6 +84,7 @@ if (isset($_GET['error'])) {
   <meta charset="utf-8">
   <title>Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="<?= rtrim(BASE_URL, '/') ?>/css/styles.css">
   <style>
     body { font-family: Arial, sans-serif; padding: 24px; }
     .card { max-width: 420px; margin: 0 auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; }
@@ -108,3 +119,4 @@ if (isset($_GET['error'])) {
   </div>
 </body>
 </html>
+

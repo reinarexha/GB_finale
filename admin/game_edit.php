@@ -87,6 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Edit Game';
 $currentPage = 'games';
 include __DIR__ . '/../includes/admin_header.php';
+
+$currentImagePath = (string)($game['image_path'] ?? '');
+$currentImageFile = basename(str_replace('\\', '/', $currentImagePath));
+$currentImageUrl = $currentImageFile !== ''
+  ? rtrim(BASE_URL, '/') . UPLOADS_GAMES_WEB . '/' . $currentImageFile
+  : '';
 ?>
 
 <section class="hero admin-hero">
@@ -182,13 +188,14 @@ include __DIR__ . '/../includes/admin_header.php';
     </div>
    
 
-    <?php if (!empty($game['image_path'])): ?>
+    <?php if ($currentImageUrl !== ''): ?>
       <div class="admin-form-group">
         <label class="admin-label">Current Image</label>
         <img
-          src="<?= htmlspecialchars($game['image_path']) ?>"
+          src="<?= htmlspecialchars($currentImageUrl) ?>"
           alt="Current game image"
           class="admin-current-image"
+          style="max-width: 120px; height: auto;"
         >
       </div>
     <?php endif; ?>
