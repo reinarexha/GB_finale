@@ -5,11 +5,19 @@ require_once __DIR__ . '/../repositories/DbGameRepository.php';
 
 $gameRepo = new DbGameRepository();
 
-$searchQuery = $_GET['search'] ?? '';
+$searchQuery = trim((string)($_GET['search'] ?? ''));
 $page = (int)($_GET['page'] ?? 1);
 if ($page < 1) $page = 1;
 
 $perPage = ITEMS_PER_PAGE;
+
+$buildPageQuery = function (int $targetPage) use ($searchQuery): string {
+  $params = ['page' => $targetPage];
+  if ($searchQuery !== '') {
+    $params['search'] = $searchQuery;
+  }
+  return http_build_query($params);
+};
 
 
 $allGames = $searchQuery ? $gameRepo->search($searchQuery) : $gameRepo->findAll();
@@ -58,7 +66,7 @@ include __DIR__ . '/../includes/admin_header.php';
     <button type="submit" class="btn-primary admin-search-btn">Search</button>
 
     <?php if ($searchQuery): ?>
-      <a href="<?= BASE_URL ?>/admin/games.php" class="btn-primary admin-search-btn">Clear</a>
+      <a href="<?= BASE_URL ?>/admin/games.php" class="btn-secondary admin-search-btn">Clear</a>
     <?php endif; ?>
   </form>
 
@@ -124,7 +132,7 @@ include __DIR__ . '/../includes/admin_header.php';
         <?php if ($page > 1): ?>
           <a
             class="btn-primary"
-            href="<?= BASE_URL ?>/admin/games.php?page=<?= $page - 1 ?><?= $searchQuery ? '&search=' . urlencode($searchQuery) : '' ?>"
+            href="<?= BASE_URL ?>/admin/games.php?<?= htmlspecialchars($buildPageQuery($page - 1)) ?>"
           >
             Previous
           </a>
@@ -135,7 +143,7 @@ include __DIR__ . '/../includes/admin_header.php';
         <?php if ($page < $totalPages): ?>
           <a
             class="btn-primary"
-            href="<?= BASE_URL ?>/admin/games.php?page=<?= $page + 1 ?><?= $searchQuery ? '&search=' . urlencode($searchQuery) : '' ?>"
+            href="<?= BASE_URL ?>/admin/games.php?<?= htmlspecialchars($buildPageQuery($page + 1)) ?>"
           >
             Next
           </a>

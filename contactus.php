@@ -15,7 +15,7 @@ include __DIR__ . '/includes/header.php';
 
 <section class="featured-games" style="padding-top: 10px;">
   <div style="max-width: 760px; margin: 0 auto; padding: 0 16px 24px;">
-    <div style="background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:18px;">
+    <div style="background:var(--bg-card);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.08);padding:18px;">
       <form method="post" action="#">
         <div style="display:grid;gap:12px;">
           <label>

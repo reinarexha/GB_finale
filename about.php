@@ -14,6 +14,9 @@ include __DIR__ . '/includes/header.php';
     Gamebits is a small university project by students learning web development.
     The goal is to build short mini-games and simple admin tools in one platform.
   </p>
+  <div class="hero-buttons">
+    <a href="<?= BASE_URL ?>/contactus.php" class="btn-primary">Contact Us</a>
+  </div>
 </section>
 
 <section class="about-section">
