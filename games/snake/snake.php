@@ -10,8 +10,10 @@ include __DIR__ . '/../../includes/header.php';
 <link rel="stylesheet" href="<?= BASE_URL ?>/games/snake/snake.css">
 
 <div id="gameContainer">
+  <h2>Snake</h2>
   <canvas id="gameBoard" width="500" height="500"></canvas>
-  <div id="scoreText">0</div>
+  <div id="scoreWrap">Score: <span id="scoreText">0</span></div>
+  <p id="statusText">Use arrow keys to move.</p>
   <button id="resetBtn">Reset</button>
 </div>
 

@@ -3,5 +3,5 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/config.php';
 
-header('Location: ' . rtrim(BASE_URL, '/') . '/pages/home.html', true, 302);
+header('Location: ' . rtrim(BASE_URL, '/') . '/home.php', true, 302);
 exit;

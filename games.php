@@ -47,6 +47,26 @@ function toPublicUrl(string $path): string {
     return $base . $path;
 }
 
+function isPlayableUrl(string $path): bool {
+    $path = trim($path);
+    if ($path === '') return false;
+
+    if (preg_match('~^https?://~i', $path)) {
+        return true;
+    }
+
+    $path = preg_replace('~^\./+~', '', $path);
+    $path = '/' . ltrim($path, '/');
+    $pathOnly = parse_url($path, PHP_URL_PATH) ?: $path;
+    $fullPath = rtrim((string)BASE_PATH, '/') . $pathOnly;
+
+    return is_file($fullPath);
+}
+
+function comingSoonUrl(string $title): string {
+    return rtrim(BASE_URL, '/') . '/games/coming-soon.php?title=' . rawurlencode($title);
+}
+
 
 
 $search = trim((string)($_GET['search'] ?? ''));
@@ -170,6 +190,11 @@ include __DIR__ . '/includes/header.php';
     border-radius: 10px;
   }
 
+  .btn-coming-soon{
+    background:#9ca3af;
+    color:#fff;
+  }
+
   .news-search{
     display:flex;
     gap: 10px;
@@ -240,7 +265,8 @@ include __DIR__ . '/includes/header.php';
             $coming  = !empty($game['is_coming_soon']);
 
             $playUrlRaw = (string)($game['play_url'] ?? '');
-            $playUrl = $coming ? '#' : ($playUrlRaw !== '' ? toPublicUrl($playUrlRaw) : '#');
+            $hasPlayableUrl = !$coming && isPlayableUrl($playUrlRaw);
+            $playUrl = $hasPlayableUrl ? toPublicUrl($playUrlRaw) : comingSoonUrl($title);
           ?>
 
           <div class="game-card">
@@ -266,10 +292,9 @@ include __DIR__ . '/includes/header.php';
             <div class="game-actions">
               <a
                 href="<?= e($playUrl) ?>"
-                class="btn-small"
-                <?= $coming ? 'onclick="return false;" aria-disabled="true"' : '' ?>
+                class="btn-small <?= $hasPlayableUrl ? '' : 'btn-coming-soon' ?>"
               >
-                <?= $coming ? 'Coming Soon' : 'Play Now' ?>
+                <?= $hasPlayableUrl ? 'Play Now' : 'Coming Soon' ?>
               </a>
             </div>
           </div>

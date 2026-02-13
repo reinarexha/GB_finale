@@ -1,11 +1,12 @@
 <?php
 
 if (!isset($currentPage)) {
-    $currentPage = '';
+  $currentPage = '';
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,15 +15,17 @@ if (!isset($currentPage)) {
   <link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <header>
     <nav class="navbar">
       <div class="nav-container">
-        <a class="nav-brand" href="<?= BASE_URL ?>/pages/home.html">Gamebits</a>
+        <!-- Canonical home is now home.php -->
+        <a class="nav-brand" href="<?= BASE_URL ?>/home.php">Gamebits</a>
 
         <ul class="nav-menu">
           <li class="nav-item">
-            <a class="nav-link <?= $currentPage === 'home' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/pages/home.html">Home</a>
+            <a class="nav-link <?= $currentPage === 'home' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/home.php">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link <?= $currentPage === 'games' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/games.php">Mini-Games</a>
@@ -47,11 +50,10 @@ if (!isset($currentPage)) {
             name="search"
             placeholder="Search games…"
             aria-label="Search"
-            value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
-          >
+            value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
         </form>
 
       </div>
     </nav>
   </header>
-  <main>
+<main>
