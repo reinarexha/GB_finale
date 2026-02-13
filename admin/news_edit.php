@@ -74,10 +74,7 @@ $currentPage = 'news';
 include __DIR__ . '/../includes/admin_header.php';
 
 $currentAttachmentPath = (string)($news['attachment_path'] ?? '');
-$currentAttachmentFile = basename(str_replace('\\', '/', $currentAttachmentPath));
-$currentAttachmentImageUrl = $currentAttachmentFile !== ''
-  ? rtrim(BASE_URL, '/') . UPLOADS_NEWS_WEB . '/' . $currentAttachmentFile
-  : '';
+$currentAttachmentImageUrl = image_url($currentAttachmentPath);
 ?>
 
 <section class="hero admin-hero">
@@ -96,7 +93,7 @@ $currentAttachmentImageUrl = $currentAttachmentFile !== ''
     </div>
   <?php endif; ?>
 
-  <form method="POST" enctype="multipart/form-data" class="admin-form-card">
+  <form method="POST" enctype="multipart/form-data" class="admin-form-card admin-card">
     <?= csrf_input() ?>
     <div class="admin-form-group">
       <label class="admin-label">Title *</label>
@@ -132,7 +129,7 @@ $currentAttachmentImageUrl = $currentAttachmentFile !== ''
           >
         <?php else: ?>
           <a
-            href="<?= htmlspecialchars($news['attachment_path']) ?>"
+            href="<?= htmlspecialchars(image_url((string)$news['attachment_path'])) ?>"
             target="_blank"
             rel="noopener"
             class="admin-file-link"

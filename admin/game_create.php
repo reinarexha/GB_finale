@@ -93,7 +93,7 @@ include __DIR__ . '/../includes/admin_header.php';
     </div>
   <?php endif; ?>
 
-  <form method="POST" enctype="multipart/form-data" class="admin-form-card">
+  <form method="POST" enctype="multipart/form-data" class="admin-form-card admin-card">
     <?= csrf_input() ?>
 
     <div class="admin-form-group">

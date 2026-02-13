@@ -89,10 +89,7 @@ $currentPage = 'games';
 include __DIR__ . '/../includes/admin_header.php';
 
 $currentImagePath = (string)($game['image_path'] ?? '');
-$currentImageFile = basename(str_replace('\\', '/', $currentImagePath));
-$currentImageUrl = $currentImageFile !== ''
-  ? rtrim(BASE_URL, '/') . UPLOADS_GAMES_WEB . '/' . $currentImageFile
-  : '';
+$currentImageUrl = image_url($currentImagePath);
 ?>
 
 <section class="hero admin-hero">
@@ -111,7 +108,7 @@ $currentImageUrl = $currentImageFile !== ''
     </div>
   <?php endif; ?>
 
-  <form method="POST" enctype="multipart/form-data" class="admin-form-card">
+  <form method="POST" enctype="multipart/form-data" class="admin-form-card admin-card">
     <?= csrf_input() ?>
 
     <div class="admin-form-group">

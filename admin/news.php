@@ -75,14 +75,12 @@ include __DIR__ . '/../includes/admin_header.php';
           $title = $item['title'] ?? '';
           $body  = $item['body'] ?? '';
           $createdAt = $item['created_at'] ?? '';
-          $attachmentPath = $item['attachment_path'] ?? '';
+          $attachmentPath = (string)($item['attachment_path'] ?? '');
           $attachmentType = $item['attachment_type'] ?? '';
           $isImage = ($attachmentType === 'image');
           $isPdf = ($attachmentType === 'pdf');
-          $thumbFile = basename(str_replace('\\', '/', (string)$attachmentPath));
-          $thumbUrl = $thumbFile !== ''
-            ? rtrim(BASE_URL, '/') . UPLOADS_NEWS_WEB . '/' . $thumbFile
-            : '';
+          $thumbUrl = image_url((string)$attachmentPath);
+          $attachmentUrl = image_url($attachmentPath);
 
           $searchText = trim($title . ' ' . $body);
         ?>
@@ -119,8 +117,8 @@ include __DIR__ . '/../includes/admin_header.php';
                   </span>
                 <?php endif; ?>
 
-                <?php if (!empty($attachmentPath) && $isPdf): ?>
-                  <a class="admin-news-file" href="<?= htmlspecialchars($attachmentPath) ?>" target="_blank" rel="noopener">
+                <?php if ($attachmentUrl !== '' && $isPdf): ?>
+                  <a class="admin-news-file" href="<?= htmlspecialchars($attachmentUrl) ?>" target="_blank" rel="noopener">
                     Open PDF
                   </a>
                 <?php endif; ?>

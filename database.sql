@@ -201,3 +201,9 @@ VALUES
  'hard',
  1,
  9);
+
+
+INSERT INTO slider_items (title, subtitle, image_path) VALUES
+('Sudoku Challenge', 'Train focus and logic with classic Sudoku.', 'img/sudoku1.webp'),
+('Snake Reflex Run', 'Sharpen reaction speed and control.', 'img/snake.png'),
+('Blackjack Decision Lab', 'Practice risk-vs-reward decisions fast.', 'img/blackjack.png');

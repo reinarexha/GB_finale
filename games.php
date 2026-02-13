@@ -195,18 +195,6 @@ include __DIR__ . '/includes/header.php';
     color:#fff;
   }
 
-  .news-search{
-    display:flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin: 14px 0 22px;
-  }
-
-  .news-search-input{
-    flex: 1;
-    min-width: 220px;
-  }
-
   .leaderboard-pagination{
     display:flex;
     gap: 12px;
@@ -324,3 +312,4 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+

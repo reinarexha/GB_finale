@@ -9,32 +9,6 @@ function e(string $value): string {
   return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-function sliderImageUrl(string $path): string {
-  $path = trim($path);
-  if ($path === '') return '';
-
-  if (preg_match('~^https?://~i', $path)) {
-    return $path;
-  }
-
-  $base = rtrim(BASE_URL, '/');
-  $normalized = '/' . ltrim(str_replace('\\', '/', $path), '/');
-
-  if ($base !== '' && str_starts_with($normalized, $base . '/')) {
-    return $normalized;
-  }
-
-  if (str_starts_with($normalized, UPLOADS_NEWS_WEB . '/')) {
-    return $base . $normalized;
-  }
-
-  if (str_starts_with($normalized, '/img/')) {
-    return $base . $normalized;
-  }
-
-  return $base . UPLOADS_NEWS_WEB . '/' . basename($normalized);
-}
-
 $content = new PageContent();
 $heroTitle = $content->getText('home', 'hero_title', 'Welcome to Gamebits');
 $heroSubtitle = $content->getText('home', 'hero_subtitle', 'Learn leadership through play.');
@@ -66,7 +40,7 @@ include __DIR__ . '/includes/header.php';
     <div class="slider-dots" aria-label="Slider dots"></div>
 
     <?php foreach ($slides as $slide): ?>
-      <?php $imageUrl = sliderImageUrl((string)$slide->image_path); ?>
+      <?php $imageUrl = image_url((string)$slide->image_path); ?>
       <div class="slide" style="padding: 1rem;">
         <div style="display:grid;grid-template-columns:1fr;gap:12px;align-items:center;">
           <?php if ($imageUrl !== ''): ?>

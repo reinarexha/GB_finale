@@ -72,10 +72,7 @@ include __DIR__ . '/../includes/admin_header.php';
       <?php foreach ($games as $game): ?>
         <?php
           $imagePath = (string)($game['image_path'] ?? '');
-          $imageFile = basename(str_replace('\\', '/', $imagePath));
-          $imageUrl = $imageFile !== ''
-            ? rtrim(BASE_URL, '/') . UPLOADS_GAMES_WEB . '/' . $imageFile
-            : '';
+          $imageUrl = image_url($imagePath);
         ?>
         <div class="game-card admin-game-card">
           <?php if ($imageUrl !== ''): ?>

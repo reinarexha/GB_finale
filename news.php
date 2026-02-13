@@ -30,21 +30,23 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <section class="news-wrap">
-  <form method="GET" action="<?= BASE_URL ?>/news.php" class="news-search">
-    <input
-      id="publicNewsSearch"
-      type="search"
-      name="search"
-      placeholder="Search news..."
-      value="<?= htmlspecialchars($searchQuery) ?>"
-      class="news-search-input"
-    >
-    <button type="submit" class="btn-primary news-search-btn">Search</button>
+  <div class="search-wrapper">
+    <form method="GET" action="<?= BASE_URL ?>/news.php" class="news-search">
+      <input
+        id="publicNewsSearch"
+        type="search"
+        name="search"
+        placeholder="Search news..."
+        value="<?= htmlspecialchars($searchQuery) ?>"
+        class="news-search-input"
+      >
+      <button type="submit" class="btn-primary news-search-btn">Search</button>
 
-    <?php if ($searchQuery): ?>
-      <a href="<?= BASE_URL ?>/news.php" class="btn-primary news-search-btn">Clear</a>
-    <?php endif; ?>
-  </form>
+      <?php if ($searchQuery): ?>
+        <a href="<?= BASE_URL ?>/news.php" class="btn-primary news-search-btn">Clear</a>
+      <?php endif; ?>
+    </form>
+  </div>
 
   <?php if (isset($_GET['error'])): ?>
     <div class="alert alert-error"><?= htmlspecialchars($_GET['error']) ?></div>

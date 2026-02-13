@@ -216,41 +216,6 @@ body {
 }
 
 /* --------------------------
-   SHARED FORM STYLES
---------------------------- */
-
-.form-group {
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.form-input,
-.small-pill-input {
-  width: 315px;
-  height: 56px;
-  border-radius: 25px;
-  background: #ffffff;
-  border: none;
-  padding: 0 18px;
-  font-size: 16px;
-  color: #333;
-  outline: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  font-family: "Inter", sans-serif;
-}
-
-.form-input::placeholder,
-.small-pill-input::placeholder {
-  color: #c4c4c4;
-}
-
-.small-pill-input {
-  width: 260px;
-  height: 36px;
-  font-size: 14px;
-}
-
-/* --------------------------
    BUTTONS
 --------------------------- */
 
@@ -859,7 +824,7 @@ body {
 .admin-wrap {
   max-width: 1200px;
   margin: 2rem auto;
-  padding: 0 2rem;
+  padding: 120px 2rem 0;
 }
 
 .admin-dashboard-layout {
@@ -987,6 +952,76 @@ body {
   padding: 0.75rem 1rem;
 }
 
+.admin-card,
+.admin-form-card {
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.admin-card .admin-form-group,
+.admin-form-card .admin-form-group {
+  margin-bottom: 1rem;
+}
+
+.admin-card .admin-label,
+.admin-form-card .admin-label {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.admin-card .admin-input,
+.admin-card .admin-file,
+.admin-card .admin-textarea,
+.admin-form-card .admin-input,
+.admin-form-card .admin-file,
+.admin-form-card .admin-textarea {
+  width: 100%;
+}
+
+.admin-card .admin-textarea,
+.admin-form-card .admin-textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.admin-card .admin-form-actions,
+.admin-form-card .admin-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.admin-wrap table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.admin-wrap th,
+.admin-wrap td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-wrap thead th {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.admin-wrap tbody tr:last-child td {
+  border-bottom: none;
+}
+
 /* Slider basic */
 .slider { position: relative; overflow: hidden; }
 
@@ -1059,26 +1094,23 @@ body {
 }
 
 .news-search {
+  width: 100%;
+  max-width: 700px;
   display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
+  gap: 10px;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .search-wrapper {
   display: flex;
   justify-content: center;
-}
-
-.search-wrapper .news-search {
-  width: 100%;
-  max-width: 700px;
-  justify-content: center;
+  margin: 1.5rem 0;
 }
 
 .news-search-input {
-  width: 100%;
-  max-width: 400px;
+  flex: 1;
+  max-width: none;
   padding: 0.75rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -1093,6 +1125,16 @@ body {
 
 .news-search-btn {
   white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .news-search {
+    flex-wrap: wrap;
+  }
+
+  .news-search-btn {
+    width: 100%;
+  }
 }
 
 .news-empty {

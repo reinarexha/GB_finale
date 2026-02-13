@@ -85,36 +85,29 @@ if (isset($_GET['error'])) {
   <title>Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?= rtrim(BASE_URL, '/') ?>/css/styles.css">
-  <style>
-    body { font-family: Arial, sans-serif; padding: 24px; }
-    .card { max-width: 420px; margin: 0 auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; }
-    label { display: block; margin-top: 12px; }
-    input { width: 100%; padding: 10px; margin-top: 6px; }
-    button { width: 100%; padding: 10px; margin-top: 16px; cursor: pointer; }
-    .error { background: #ffe5e5; border: 1px solid #ffb3b3; padding: 10px; border-radius: 8px; margin-bottom: 12px; }
-    .links { margin-top: 14px; text-align: center; }
-  </style>
 </head>
 <body>
-  <div class="card">
-    <h2>Login</h2>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1>Login</h1>
 
-    <?php if ($error !== ''): ?>
-      <div class="error"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
-    <?php endif; ?>
+      <?php if ($error !== ''): ?>
+        <div class="error"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
+      <?php endif; ?>
 
-    <form method="POST" action="<?php echo rtrim(BASE_URL, '/') . '/auth/login.php'; ?>">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" required value="<?php echo $emailValue; ?>">
+      <form method="POST" action="<?php echo rtrim(BASE_URL, '/') . '/auth/login.php'; ?>">
+        <label for="email">Email</label>
+        <input class="form-input" id="email" name="email" type="email" required value="<?php echo $emailValue; ?>">
 
-      <label for="password">Password</label>
-      <input id="password" name="password" type="password" required>
+        <label for="password">Password</label>
+        <input class="form-input" id="password" name="password" type="password" required>
 
-      <button type="submit">Log in</button>
-    </form>
+        <button class="btn-primary" type="submit">Log in</button>
+      </form>
 
-    <div class="links">
-      <p>No account? <a href="<?php echo rtrim(BASE_URL, '/') . '/auth/register.php'; ?>">Register</a></p>
+      <div class="signup-text">
+        <p>No account? <a href="<?php echo rtrim(BASE_URL, '/') . '/auth/register.php'; ?>">Register</a></p>
+      </div>
     </div>
   </div>
 </body>
