@@ -85,10 +85,13 @@ class DbNewsRepository implements NewsRepositoryInterface
         $stmt = $this->pdo->prepare("
             SELECT *
             FROM news
-            WHERE title LIKE :q OR COALESCE(body, '') LIKE :q
+            WHERE title LIKE :q1 OR COALESCE(body, '') LIKE :q2
             ORDER BY created_at DESC
         ");
-        $stmt->execute([':q' => $q]);
+        $stmt->execute([
+            ':q1' => $q,
+            ':q2' => $q,
+        ]);
         return $stmt->fetchAll();
     }
 }

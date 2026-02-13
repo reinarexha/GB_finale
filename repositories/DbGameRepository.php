@@ -100,11 +100,14 @@ class DbGameRepository implements GameRepositoryInterface
         $stmt = $this->pdo->prepare("
     SELECT *
     FROM games
-    WHERE title LIKE :q OR COALESCE(description, '') LIKE :q
+    WHERE title LIKE :q1 OR COALESCE(description, '') LIKE :q2
     ORDER BY sort_order ASC, created_at DESC
 ");
 
-        $stmt->execute([':q' => $q]);
+        $stmt->execute([
+    ':q1' => $q,
+    ':q2' => $q,
+]);
         return $stmt->fetchAll();
     }
 }
