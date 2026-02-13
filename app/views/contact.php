@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="<?php echo (defined('BASE_URL') ? rtrim(BASE_URL, '/') : '') . '/css/styles.css'; ?>">
     <style>
         .contact-wrapper { padding: 2rem; max-width: 500px; margin: 0 auto; text-align: center; }
         .contact-wrapper h1 { margin-bottom: 1rem; color: #fff; }

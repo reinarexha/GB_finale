@@ -49,13 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header>
         <nav class="navbar">
             <div class="nav-container">
-                <a class="nav-brand" href="index.php">Gamebits</a>
+                <a class="nav-brand" href="../pages/home.html">Gamebits</a>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Mini-Games</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../pages/home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../games.php">Mini-Games</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../leaderboard.php">Leaderboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-                    <?php if ($auth->isAdmin()): ?><li class="nav-item"><a class="nav-link" href="/admin/">Admin Dashboard</a></li><?php endif; ?>
+                    <?php if ($auth->isAdmin()): ?><li class="nav-item"><a class="nav-link" href="/GameBits/admin/dashboard.php">Admin Dashboard</a></li><?php endif; ?>
                     <li class="nav-item"><?php if (!$auth->check()): ?><a class="nav-link" href="/login.php">Log In</a><?php else: ?><a class="nav-link" href="/logout.php">Logout</a><?php endif; ?></li>
                 </ul>
                 <form class="nav-search">

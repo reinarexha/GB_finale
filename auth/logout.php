@@ -8,5 +8,5 @@ $auth = new Auth();
 $auth->start();
 $auth->logout();
 
-header('Location: /index.php');
+header('Location: /GameBits/pages/home.html');
 exit;

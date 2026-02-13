@@ -198,7 +198,7 @@ include __DIR__ . '/includes/header.php';
   <h1 class="hero-title">Mini-Games</h1>
   <p class="hero-sub">Browse our collection of leadership training mini-games.</p>
   <div class="hero-buttons">
-    <a href="<?= e(rtrim(BASE_URL, '/')) ?>/home.php" class="btn-primary">Back to Home</a>
+    <a href="<?= e(rtrim(BASE_URL, '/')) ?>/pages/home.html" class="btn-primary">Back to Home</a>
   </div>
 </section>
 

@@ -1,30 +1,22 @@
 <?php
-
-require_once __DIR__ . '/../../app/bootstrap.php';
-
-$auth = new Auth();
-$auth->start();
-$auth->requireAdmin();
-
+declare(strict_types=1);
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard – Gamebits</title>
-    <link rel="stylesheet" href="../../css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deprecated Admin Path</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; line-height: 1.4; }
+    .box { max-width: 700px; padding: 16px; border: 1px solid #ccc; border-radius: 8px; }
+  </style>
 </head>
 <body>
-    <main>
-        <h1>Admin Dashboard</h1>
-        <ul>
-            <li><a href="/admin/games/">Manage Games</a></li>
-            <li><a href="/admin/content/">Manage Content</a></li>
-            <li><a href="/admin/messages/">Messages</a></li>
-            <li><a href="/admin/users/">Users</a></li>
-        </ul>
-        <p><a href="/index.php">Back to site</a></p>
-    </main>
+  <div class="box">
+    <h1>Deprecated / Not in use</h1>
+    <p>This admin path is no longer used.</p>
+    <p>Please use the active admin dashboard at <a href="/GameBits/admin/dashboard.php">/GameBits/admin/dashboard.php</a>.</p>
+  </div>
 </body>
 </html>

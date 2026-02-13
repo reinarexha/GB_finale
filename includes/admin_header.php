@@ -23,7 +23,7 @@ if (!isset($currentPage)) {
       <a class="nav-brand" href="<?= BASE_URL ?>/admin/dashboard.php">Admin • Gamebits</a>
       <ul class="nav-menu">
         <li class="nav-item">
-          <a class="nav-link" href="<?= BASE_URL ?>/index.php">View Site</a>
+          <a class="nav-link" href="<?= BASE_URL ?>/pages/home.html">View Site</a>
         </li>
       </ul>
     </div>

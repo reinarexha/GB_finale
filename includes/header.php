@@ -18,7 +18,7 @@ if (!isset($currentPage)) {
   <header>
     <nav class="navbar">
       <div class="nav-container">
-        <a class="nav-brand" href="<?= BASE_URL ?>/index.php">Gamebits</a>
+        <a class="nav-brand" href="<?= BASE_URL ?>/pages/home.html">Gamebits</a>
 
         <ul class="nav-menu">
           <li class="nav-item">
