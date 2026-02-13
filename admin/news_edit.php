@@ -125,7 +125,6 @@ $currentAttachmentImageUrl = image_url($currentAttachmentPath);
             src="<?= htmlspecialchars($currentAttachmentImageUrl) ?>"
             alt="Current attachment"
             class="admin-current-image"
-            style="max-width: 120px; height: auto;"
           >
         <?php else: ?>
           <a

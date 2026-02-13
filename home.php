@@ -29,11 +29,11 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <?php if (!empty($slides)): ?>
-<section class="featured-games" style="padding-top: 0;">
+<section class="featured-games featured-compact">
   <h2 class="section-title">Featured Highlights</h2>
 
   <!-- student project: keeping it simple, homepage content and slides come from DB only. -->
-  <div class="slider" tabindex="0" style="max-width: 960px; margin: 0 auto 2rem; border-radius: 12px; border: 1px solid #d1d5db; background: #fff;">
+  <div class="slider slider-shell" tabindex="0">
     <button class="slider-btn prev" type="button" aria-label="Previous slide">‹</button>
     <button class="slider-btn next" type="button" aria-label="Next slide">›</button>
 
@@ -41,21 +41,23 @@ include __DIR__ . '/includes/header.php';
 
     <?php foreach ($slides as $slide): ?>
       <?php $imageUrl = image_url((string)$slide->image_path); ?>
-      <div class="slide" style="padding: 1rem;">
-        <div style="display:grid;grid-template-columns:1fr;gap:12px;align-items:center;">
-          <?php if ($imageUrl !== ''): ?>
-            <img
-              src="<?= e($imageUrl) ?>"
-              alt="<?= e($slide->title ?: 'Slide image') ?>"
-              class="slider-image"
-            >
-          <?php else: ?>
-            <div class="slider-empty">Image missing for this slide.</div>
-          <?php endif; ?>
+      <div class="slide slide-pad">
+        <div class="slide-content">
+          <div class="slider-media">
+            <?php if ($imageUrl !== ''): ?>
+              <img
+                src="<?= e($imageUrl) ?>"
+                alt="<?= e($slide->title ?: 'Slide image') ?>"
+                class="slider-image"
+              >
+            <?php else: ?>
+              <div class="slider-empty">Image missing for this slide.</div>
+            <?php endif; ?>
+          </div>
           <div>
-            <h3 style="margin:0 0 6px;"><?= e($slide->title) ?></h3>
+            <h3 class="slide-title"><?= e($slide->title) ?></h3>
             <?php if (!empty($slide->subtitle)): ?>
-              <p style="margin:0;opacity:.85;"><?= e((string)$slide->subtitle) ?></p>
+              <p class="slide-sub"><?= e((string)$slide->subtitle) ?></p>
             <?php endif; ?>
           </div>
         </div>
@@ -64,7 +66,7 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 <?php else: ?>
-<section class="featured-games" style="padding-top: 0;">
+<section class="featured-games featured-compact">
   <h2 class="section-title">Featured Highlights</h2>
   <p class="slider-empty">No slider highlights yet. Add slides from Admin.</p>
 </section>
@@ -96,4 +98,5 @@ include __DIR__ . '/includes/header.php';
 <script src="<?= e(rtrim(BASE_URL, '/')) ?>/public/assets/js/slider.js"></script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+
 

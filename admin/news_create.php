@@ -113,7 +113,7 @@ include __DIR__ . '/../includes/admin_header.php';
             accept="image/jpeg,image/png,image/webp,application/pdf"
              class="admin-file"
         >
-         <div id="newsAttachmentPreview" class="admin-file-preview"></div>
+         <div id="newsAttachmentPreview" class="admin-file-preview admin-image-preview"></div>
 
       <small class="admin-help">Allowed: JPG, PNG, WEBP, PDF (max 5MB)</small>
     </div>

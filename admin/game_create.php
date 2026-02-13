@@ -141,11 +141,13 @@ include __DIR__ . '/../includes/admin_header.php';
     </div>
 
     <div class="admin-form-group">
-      <label class="admin-label">
+      <label class="admin-label">Availability</label>
+      <label class="admin-checkbox-label">
         <input
           type="checkbox"
           name="is_coming_soon"
           value="1"
+          class="admin-checkbox"
           <?= !empty($_POST['is_coming_soon']) ? 'checked' : '' ?>
         >
         Coming soon

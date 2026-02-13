@@ -156,17 +156,19 @@ $currentImageUrl = image_url($currentImagePath);
     </div>
 
     <div class="admin-form-group">
-      <label class="admin-label">
-        <?php
-          
-          $comingChecked = !empty($_POST)
-            ? !empty($_POST['is_coming_soon'])
-            : !empty($game['is_coming_soon']);
-        ?>
+      <label class="admin-label">Availability</label>
+      <?php
+        
+        $comingChecked = !empty($_POST)
+          ? !empty($_POST['is_coming_soon'])
+          : !empty($game['is_coming_soon']);
+      ?>
+      <label class="admin-checkbox-label">
         <input
           type="checkbox"
           name="is_coming_soon"
           value="1"
+          class="admin-checkbox"
           <?= $comingChecked ? 'checked' : '' ?>
         >
         Coming soon
@@ -192,7 +194,6 @@ $currentImageUrl = image_url($currentImagePath);
           src="<?= htmlspecialchars($currentImageUrl) ?>"
           alt="Current game image"
           class="admin-current-image"
-          style="max-width: 120px; height: auto;"
         >
       </div>
     <?php endif; ?>
