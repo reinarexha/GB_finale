@@ -1,13 +1,17 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/require_admin.php';
 require_once __DIR__ . '/../repositories/DbGameRepository.php';
 require_once __DIR__ . '/../utils/FileUploader.php';
-require_once __DIR__ . '/../includes/config.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . BASE_URL . '/admin/games.php');
+    exit;
+}
+
+if (!csrf_validate()) {
+    header('Location: ' . BASE_URL . '/admin/games.php?error=' . urlencode('Invalid form token'));
     exit;
 }
 

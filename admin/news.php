@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/require_admin.php';
 require_once __DIR__ . '/../repositories/DbNewsRepository.php';
 
@@ -135,6 +135,7 @@ include __DIR__ . '/../includes/admin_header.php';
                   class="admin-inline-form"
                   data-confirm="delete"
                 >
+                  <?= csrf_input() ?>
                   <input type="hidden" name="id" value="<?= (int)($item['id'] ?? 0) ?>">
                   <button type="submit" class="btn-primary btn-small btn-danger">Delete</button>
                 </form>

@@ -31,7 +31,7 @@ class Game
     public function create(array $data, int $userId): int
     {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("INSERT INTO games (title, description, image_path, created_by, updated_by, created_at, updated_at) OUTPUT INSERTED.id VALUES (?, ?, ?, ?, ?, GETDATE(), GETDATE())");
+        $stmt = $pdo->prepare("INSERT INTO games (title, description, image_path, created_by, updated_by, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
         $stmt->execute([
             $data['title'] ?? '',
             $data['description'] ?? null,
@@ -39,13 +39,13 @@ class Game
             $userId,
             $userId
         ]);
-        return (int) $stmt->fetchColumn();
+        return (int) $pdo->lastInsertId();
     }
 
     public function update(int $id, array $data, int $userId): bool
     {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("UPDATE games SET title = ?, description = ?, image_path = ?, updated_by = ?, updated_at = GETDATE() WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE games SET title = ?, description = ?, image_path = ?, updated_by = ?, updated_at = NOW() WHERE id = ?");
         return $stmt->execute([
             $data['title'] ?? '',
             $data['description'] ?? null,

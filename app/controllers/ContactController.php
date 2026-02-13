@@ -1,5 +1,6 @@
 <?php
-require_once DIR . '/../models/ContactMessage.php';
+require_once __DIR__ . '/../../includes/bootstrap.php';
+require_once __DIR__ . '/../models/ContactMessage.php';
 
 class ContactController {
     public static function submit(): void {

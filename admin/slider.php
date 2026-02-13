@@ -1,16 +1,11 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/require_admin.php';
-require_once __DIR__ . '/../app/core/Database.php';
 require_once __DIR__ . '/../app/models/SliderItem.php';
 
 $pdo = Database::getConnection();
 $errors = [];
 $success = '';
-
-if (empty($_SESSION['csrf_token'])) {
-  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
 
 function old(string $key, string $default = ''): string {
   return isset($_POST[$key]) ? trim((string)$_POST[$key]) : $default;
@@ -46,8 +41,7 @@ function saveContentText(PDO $pdo, string $page, string $sectionKey, string $tex
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $postedToken = (string)($_POST['csrf_token'] ?? '');
-  if (!hash_equals($_SESSION['csrf_token'], $postedToken)) {
+  if (!csrf_validate()) {
     $errors[] = 'Invalid form token. Please refresh and try again.';
   } else {
     if (isset($_POST['save_home'])) {
@@ -166,7 +160,7 @@ include __DIR__ . '/../includes/admin_header.php';
   <div class="admin-card admin-form-card">
     <h2 class="section-title" style="margin: 0 0 1rem;">Home page content</h2>
     <form method="post">
-      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+      <?= csrf_input() ?>
 
       <div class="admin-form-group">
         <label class="admin-label">Hero title</label>
@@ -185,7 +179,7 @@ include __DIR__ . '/../includes/admin_header.php';
   <div class="admin-card admin-form-card">
     <h2 class="section-title" style="margin: 0 0 1rem;">About page content</h2>
     <form method="post">
-      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+      <?= csrf_input() ?>
 
       <div class="admin-form-group">
         <label class="admin-label">About text</label>
@@ -201,7 +195,7 @@ include __DIR__ . '/../includes/admin_header.php';
     <h2 class="section-title" style="margin: 0 0 1rem;">Add new slide</h2>
 
     <form method="post">
-      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+      <?= csrf_input() ?>
 
       <div class="admin-form-group">
         <label class="admin-label">Slide title</label>
@@ -238,7 +232,7 @@ include __DIR__ . '/../includes/admin_header.php';
             <small><?= htmlspecialchars($item->image_path) ?></small>
           </div>
           <form method="post" onsubmit="return confirm('Delete this slide?');">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+            <?= csrf_input() ?>
             <input type="hidden" name="id" value="<?= (int)$item->id ?>">
             <button class="btn-secondary" type="submit" name="delete" value="1">Delete</button>
           </form>

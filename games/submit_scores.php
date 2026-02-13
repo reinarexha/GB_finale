@@ -1,8 +1,7 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../repositories/DbScoreRepository.php';
 require_once __DIR__ . '/../repositories/DbGameRepository.php';
-require_once __DIR__ . '/../app/core/Auth.php';
 
 header('Content-Type: application/json');
 
@@ -11,10 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   echo json_encode(['ok' => false, 'error' => 'Method not allowed']);
   exit;
 }
-
-
-$auth = new Auth();
-$auth->start();
 
 $userId = (int)($auth->id() ?? 0);
 if ($userId <= 0) {

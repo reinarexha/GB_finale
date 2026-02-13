@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/require_admin.php';
 require_once __DIR__ . '/../repositories/DbGameRepository.php';
 
@@ -105,6 +105,7 @@ include __DIR__ . '/../includes/admin_header.php';
               class="admin-inline-form"
               onsubmit="return confirm('Are you sure you want to delete this game?');"
             >
+              <?= csrf_input() ?>
               <input type="hidden" name="id" value="<?= (int)$game['id'] ?>">
               <button type="submit" class="btn-primary btn-small btn-danger">Delete</button>
             </form>

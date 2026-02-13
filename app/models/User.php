@@ -31,7 +31,7 @@ class User
     public function update(int $id, array $data, int $adminUserId): bool
     {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, role = ?, updated_by = ?, updated_at = GETDATE() WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, role = ?, updated_by = ?, updated_at = NOW() WHERE id = ?");
         return $stmt->execute([
             $data['username'] ?? '',
             $data['email'] ?? '',

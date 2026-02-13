@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/require_admin.php';
 require_once __DIR__ . '/../repositories/DbNewsRepository.php';
 require_once __DIR__ . '/../utils/FileUploader.php';
@@ -7,6 +7,11 @@ require_once __DIR__ . '/../utils/FileUploader.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . BASE_URL . '/admin/news.php');
+    exit;
+}
+
+if (!csrf_validate()) {
+    header('Location: ' . BASE_URL . '/admin/news.php?error=' . urlencode('Invalid form token'));
     exit;
 }
 

@@ -1,13 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../app/config.php';
-require_once __DIR__ . '/../app/core/Database.php';
-require_once __DIR__ . '/../app/core/Auth.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../app/core/Validator.php';
 require_once __DIR__ . '/../app/models/ContactMessage.php';
-
-$auth = new Auth();
-$auth->start();
 
 $errors = [];
 $old = $_POST ?? [];
@@ -21,8 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 
     if (empty($errors)) {
-        $model = new ContactMessage();
-        $model->create([
+        ContactMessage::create([
             'name' => trim($_POST['name'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
             'subject' => trim($_POST['subject'] ?? '') ?: null,

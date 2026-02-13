@@ -1,18 +1,15 @@
-
 <?php
-session_start();
+require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../app/models/ContactMessage.php';
 
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../models/ContactMessage.php';
-
-// role check 
 require_once __DIR__ . '/../includes/require_admin.php';
-if (!isset($_SESSION['user']) || ($_SESSION['user']['role'] ?? '') !== 'admin') {
-  header('Location: ' . BASE_URL . '/auth/signin.php');
-  exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (!csrf_validate()) {
+    header('Location: ' . BASE_URL . '/admin/messages.php');
+    exit;
+  }
+
   $id = (int)($_POST['id'] ?? 0);
 
   if (isset($_POST['mark_read']) && $id > 0) {
@@ -64,7 +61,7 @@ include __DIR__ . '/../includes/admin_header.php';
             <tbody>
               <?php foreach ($messages as $m): ?>
                 <tr>
-                  <td><?= ((int)$m['is_read'] === 1) ? 'Read' : 'New' ?></td>
+                  <td><?= ((int)($m['is_read'] ?? 0) === 1) ? 'Read' : 'New' ?></td>
                   <td><?= htmlspecialchars($m['name']) ?></td>
                   <td><?= htmlspecialchars($m['email']) ?></td>
                   <td><?= htmlspecialchars(date('M d, Y', strtotime($m['created_at']))) ?></td>
@@ -94,14 +91,16 @@ include __DIR__ . '/../includes/admin_header.php';
           <p><?= nl2br(htmlspecialchars($selected['message'])) ?></p>
 
           <div class="admin-card-actions">
-            <?php if ((int)$selected['is_read'] === 0): ?>
+            <?php if ((int)($selected['is_read'] ?? 0) === 0): ?>
               <form method="post" class="admin-inline-form">
+                <?= csrf_input() ?>
                 <input type="hidden" name="id" value="<?= (int)$selected['id'] ?>">
                 <button class="btn-primary btn-small" name="mark_read" value="1" type="submit">Mark as read</button>
               </form>
             <?php endif; ?>
 
             <form method="post" class="admin-inline-form" onsubmit="return confirm('Delete this message?');">
+              <?= csrf_input() ?>
               <input type="hidden" name="id" value="<?= (int)$selected['id'] ?>">
               <button class="btn-primary btn-small btn-danger" name="delete" value="1" type="submit">Delete</button>
             </form>

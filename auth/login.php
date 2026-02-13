@@ -1,13 +1,9 @@
 <?php
 // auth/login.php
 
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../app/core/Database.php';
-require_once __DIR__ . '/../app/core/Auth.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
 
 $pdo  = Database::getConnection();
-$auth = new Auth();
-$auth->start();
 
 // If already logged in, redirect based on role
 if ($auth->check()) {

@@ -1,5 +1,7 @@
 <?php
 declare(strict_types=1);
+
+require_once __DIR__ . '/../../includes/bootstrap.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,7 +18,7 @@ declare(strict_types=1);
   <div class="box">
     <h1>Deprecated / Not in use</h1>
     <p>This admin path is no longer used.</p>
-    <p>Please use the active admin dashboard at <a href="/GameBits/admin/dashboard.php">/GameBits/admin/dashboard.php</a>.</p>
+    <p>Please use the active admin dashboard at <a href="<?= rtrim(BASE_URL, '/') ?>/admin/dashboard.php"><?= rtrim(BASE_URL, '/') ?>/admin/dashboard.php</a>.</p>
   </div>
 </body>
 </html>

@@ -1,8 +1,15 @@
+
 <?php
+require_once __DIR__ . '/bootstrap.php';
 
 if (!isset($currentPage)) {
   $currentPage = '';
 }
+
+$isLoggedIn = $auth->check();
+$isAdmin = $auth->isAdmin();
+$user = $auth->user();
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,9 +46,24 @@ if (!isset($currentPage)) {
           <li class="nav-item">
             <a class="nav-link <?= $currentPage === 'about' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/pages/aboutus.html">About</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= BASE_URL ?>/auth/signin.html">Log In</a>
-          </li>
+          <?php if (!$isLoggedIn): ?>
+  <li class="nav-item">
+    <a class="nav-link" href="<?= BASE_URL ?>/auth/login.php">Log In</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="<?= BASE_URL ?>/auth/register.php">Register</a>
+  </li>
+<?php else: ?>
+  <?php if ($isAdmin): ?>
+    <li class="nav-item">
+      <a class="nav-link <?= $currentPage === 'admin' ? 'active' : ''; ?>" href="<?= BASE_URL ?>/admin/dashboard.php">Admin</a>
+    </li>
+  <?php endif; ?>
+  <li class="nav-item">
+    <a class="nav-link" href="<?= BASE_URL ?>/auth/logout.php">Log Out</a>
+  </li>
+<?php endif; ?>
+
         </ul>
 
         <form class="nav-search" method="GET" action="<?= BASE_URL ?>/games.php">

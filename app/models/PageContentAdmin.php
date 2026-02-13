@@ -31,7 +31,7 @@ class PageContentAdmin
     public function update(int $id, array $data, int $userId): bool
     {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("UPDATE page_contents SET content_text = ?, content_image_path = ?, updated_by = ?, updated_at = GETDATE() WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE page_contents SET content_text = ?, content_image_path = ?, updated_by = ?, updated_at = NOW() WHERE id = ?");
         return $stmt->execute([
             $data['content_text'] ?? null,
             $data['content_image_path'] ?? null,
