@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../repositories/DbScoreRepository.php';
 require_once __DIR__ . '/../repositories/DbGameRepository.php';
+require_once __DIR__ . '/../app/core/Auth.php';
 
 header('Content-Type: application/json');
 
@@ -11,16 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   exit;
 }
 
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
 
-$userId = (int)($_SESSION['user']['id'] ?? 0);
+$auth = new Auth();
+$auth->start();
+
+$userId = (int)($auth->id() ?? 0);
 if ($userId <= 0) {
   http_response_code(401);
   echo json_encode(['ok' => false, 'error' => 'Not logged in']);
   exit;
 }
+
 
 $input = json_decode(file_get_contents('php://input'), true);
 $score = (int)($input['score'] ?? 0);

@@ -33,31 +33,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             // IMPORTANT: change column names if yours differ
-            $stmt = $pdo->prepare('SELECT id, email, password_hash, role FROM users WHERE email = ? LIMIT 1');
+            $stmt = $pdo->prepare('SELECT id, username, email, password, role FROM users WHERE email = ? LIMIT 1');
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Generic error for both cases (prevents email enumeration)
-            if (!$user || !password_verify($password, (string)$user['password_hash'])) {
+            if (!$user || !password_verify($password, (string)$user['password'])) {
                 $error = 'Invalid email or password.';
             } else {
                 // Successful login
                 session_regenerate_id(true);
-
                 $auth->login([
-                    'id'       => $user['id'],
-                    'username' => $user['email'], // or fetch username column if you have one
-                    'role'     => $user['role'],
-                ]);
+                    'id' => $user['id'],
+                    'username' => $user['username'] ?? $user['email'],
+                    'role' => $user['role'] ?? 'user',
+                    ]
+                    );
+                    if (($user['role'] ?? '') === 'admin') {
+                         header('Location: ' . rtrim(BASE_URL, '/') . '/admin/dashboard.php');
+                          exit;
+                          }
+                          header('Location: ' . rtrim(BASE_URL, '/') . '/games.php');
+                          exit;
 
-                // Redirect based on role using BASE_URL
-                if (($user['role'] ?? '') === 'admin') {
-                    header('Location: ' . rtrim(BASE_URL, '/') . '/admin/dashboard.php');
-                    exit;
-                }
-
-                header('Location: ' . rtrim(BASE_URL, '/') . '/games.php');
-                exit;
             }
         } catch (Throwable $e) {
             // Don't expose raw DB errors in production

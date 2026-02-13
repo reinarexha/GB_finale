@@ -76,21 +76,25 @@ class Auth
     }
 
    
-    public function requireLogin(): void
-    {
-        if (!$this->check()) {
-            header('Location: /login.php');
-            exit;
-        }
+   public function requireLogin(): void
+{
+    if (!$this->check()) {
+        $base = defined('BASE_URL') ? rtrim((string)BASE_URL, '/') : '';
+        header('Location: ' . $base . '/auth/login.php?error=login_required');
+        exit;
     }
+}
+
+
 
     
     public function requireAdmin(): void
-    {
-        if (!$this->isAdmin()) {
-            http_response_code(403);
-            echo '403 Forbidden';
-            exit;
-        }
+{
+    if (!$this->isAdmin()) {
+        $base = defined('BASE_URL') ? rtrim((string)BASE_URL, '/') : '';
+        header('Location: ' . $base . '/auth/login.php?error=unauthorized');
+        exit;
     }
+}
+
 }

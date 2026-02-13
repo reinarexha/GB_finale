@@ -1,20 +1,9 @@
 <?php
 // includes/require_admin.php
-// Guard to protect admin pages. Expects `includes/config.php` to be included first
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
+require_once __DIR__ . '/../app/core/Auth.php';
 
-// If config defined BASE_URL it should already be available; otherwise fall back to ''
-$base = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
+// $auth = new Auth();
+$auth->requireLogin();  // redirects if not logged in
+$auth->requireAdmin();  // 403 if not admin
 
-if (!isset($_SESSION['user_id'])) {
-  header('Location: ' . $base . '/auth/login.php?error=login_required');
-  exit;
-}
-
-if (($_SESSION['role'] ?? '') !== 'admin') {
-  header('Location: ' . $base . '/auth/login.php?error=unauthorized');
-  exit;
-}
 

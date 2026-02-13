@@ -1,12 +1,9 @@
 <?php
-
-
-
-require_once __DIR__ . '/../app/bootstrap.php';
+require_once __DIR__ . '/../app/core/Auth.php';
 
 $auth = new Auth();
-$auth->start();
 $auth->logout();
 
-header('Location: /GameBits/pages/home.html');
+header('Location: /auth/login.php');
 exit;
+
